@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificación en portería</title>
+</head>
+<body>
+    <h1>Verificación de acceso</h1>
+    <form method="GET">
+        <label>Ingresá el DNI a verificar:</label><br>
+        <input type="text" name="dni" value="{{ dni_buscado or '' }}" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+{% if buscado %}
+    <hr>
+    {% if resultado %}
+        <h2 style="color: green;">✅ ACCESO AUTORIZADO</h2>
+        <p><strong>Nombre:</strong> {{ resultado.nombre_solicitante }}</p>
+        <p><strong>Sede:</strong> {{ resultado.sede.nombre }}</p>
+        <p><strong>Empresa:</strong> {{ resultado.empresa }}</p>
+        <p><strong>Motivo:</strong> {{ resultado.motivo }}</p>
+
+        {% if resultado.hora_ingreso %}
+            <p><strong>Ingreso registrado:</strong> {{ resultado.hora_ingreso }}</p>
+        {% else %}
+            <form method="POST" action="{{ url_for('registrar_ingreso', id=resultado.id) }}">
+                <button type="submit">Registrar ingreso</button>
+            </form>
+        {% endif %}
+
+        {% if resultado.hora_ingreso and not resultado.hora_egreso %}
+            <form method="POST" action="{{ url_for('registrar_egreso', id=resultado.id) }}">
+                <button type="submit">Registrar egreso</button>
+            </form>
+        {% endif %}
+
+        {% if resultado.hora_egreso %}
+            <p><strong>Egreso registrado:</strong> {{ resultado.hora_egreso }}</p>
+        {% endif %}
+    {% else %}
+        <h2 style="color: red;">❌ ACCESO NO AUTORIZADO</h2>
+        <p>No hay ninguna solicitud aprobada para el DNI {{ dni_buscado }}.</p>
+    {% endif %}
+{% endif %}
+</body>
+</html>

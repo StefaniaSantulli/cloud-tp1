@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de aprobación</title>
+</head>
+<body>
+    <h1>Solicitudes pendientes</h1>
+
+    {% if solicitudes|length == 0 %}
+        <p>No hay solicitudes pendientes.</p>
+    {% endif %}
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Nombre</th>
+            <th>DNI</th>
+            <th>Patente</th>
+            <th>Empresa</th>
+            <th>Motivo</th>
+            <th>Sede</th>
+            <th>Acción</th>
+        </tr>
+        {% for s in solicitudes %}
+        <tr>
+            <td>{{ s.nombre_solicitante }}</td>
+            <td>{{ s.dni }}</td>
+            <td>{{ s.patente }}</td>
+            <td>{{ s.empresa }}</td>
+            <td>{{ s.motivo }}</td>
+            <td>{{ s.sede.nombre }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('resolver_solicitud', id=s.id) }}" style="display:inline">
+                    <button type="submit" name="accion" value="aprobada">Aprobar</button>
+                    <button type="submit" name="accion" value="rechazada">Rechazar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br><a href="{{ url_for('ver_solicitudes') }}">Ver todas las solicitudes (incluye resueltas)</a>
+</body>
+</html>
