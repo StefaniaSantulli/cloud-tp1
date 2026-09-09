@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Nueva solicitud — AccesoSeguro{% endblock %}
+{% block page_title %}Nueva solicitud de acceso{% endblock %}
+{% block page_subtitle %}Completá los datos para solicitar autorización de ingreso{% endblock %}
+{% block content %}
+<div class="panel-card" style="max-width:640px">
+  {% if mensaje %}
+    <div class="alert-success-custom mb-field">{{ mensaje }}</div>
+  {% endif %}
+  <form method="POST" enctype="multipart/form-data">
+    <div class="mb-field">
+      <label>Nombre completo</label>
+      <input class="form-control" type="text" name="nombre_solicitante" required>
+    </div>
+    <div class="mb-field">
+      <label>DNI</label>
+      <input class="form-control" type="text" name="dni" required>
+    </div>
+    <div class="mb-field">
+      <label>Patente (si aplica)</label>
+      <input class="form-control" type="text" name="patente">
+    </div>
+    <div class="mb-field">
+      <label>Empresa</label>
+      <input class="form-control" type="text" name="empresa">
+    </div>
+    <div class="mb-field">
+      <label>Motivo de la visita</label>
+      <input class="form-control" type="text" name="motivo">
+    </div>
+    <div class="mb-field">
+      <label>Documento de respaldo (foto de seguro, remito o DNI)</label>
+      <input class="form-control" type="file" name="documento">
+    </div>
+    <div class="mb-field">
+      <label>Sede</label>
+      <select class="form-select" name="sede_id">
+        {% for sede in sedes %}
+          <option value="{{ sede.id }}">{{ sede.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn-primary-custom">Enviar solicitud</button>
+  </form>
+</div>
+{% endblock %}

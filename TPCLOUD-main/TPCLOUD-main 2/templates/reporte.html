@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Reporte histórico — AccesoSeguro{% endblock %}
+{% block page_title %}Reporte histórico de accesos{% endblock %}
+{% block page_subtitle %}Exportá un listado filtrado por sede y rango de fechas{% endblock %}
+{% block content %}
+<div class="panel-card" style="max-width:520px">
+  <form method="GET" action="{{ url_for('exportar_reporte') }}">
+    <div class="mb-field">
+      <label>Sede</label>
+      <select class="form-select" name="sede_id">
+        <option value="">Todas las sedes</option>
+        {% for sede in sedes %}
+          <option value="{{ sede.id }}">{{ sede.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-field"><label>Desde</label><input class="form-control" type="date" name="desde"></div>
+    <div class="mb-field"><label>Hasta</label><input class="form-control" type="date" name="hasta"></div>
+    <button type="submit" class="btn-primary-custom">Descargar CSV</button>
+  </form>
+</div>
+{% endblock %}
