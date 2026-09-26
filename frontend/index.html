@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AccesoSeguro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="assets/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar-custom">
+  <div class="wrap">
+    <a class="navbar-brand-custom" href="index.html">AccesoSeguro</a>
+    <div class="navbar-links" id="nav-links"></div>
+  </div>
+</nav>
+
+<header class="site-header">
+  <div class="wrap">
+    <span class="pill">Sistema de gestión de accesos</span>
+    <h1>AccesoSeguro</h1>
+    <p>Control de acceso a plantas industriales: solicitudes, aprobaciones, verificación en portería y trazabilidad completa.</p>
+  </div>
+</header>
+
+<main class="steps">
+  <div class="wrap">
+    <div class="row" id="steps-container"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap"><p>AccesoSeguro — Sistema de control de acceso a plantas industriales</p></div>
+</footer>
+
+<script src="assets/auth.js"></script>
+<script>
+const rol = requireRole(["conductor", "admin"]);
+renderNav();
+
+const PASOS_CONDUCTOR = [
+  { href: "nueva-solicitud.html", titulo: "Nueva solicitud de acceso", texto: "Cargá tus datos y adjuntá documentación de respaldo." },
+  { href: "mis-solicitudes.html", titulo: "Mis solicitudes", texto: "Consultá el estado de tus solicitudes cargadas, buscando por tu DNI." },
+];
+
+const PASOS_ADMIN = [
+  { href: "panel-aprobacion.html", titulo: "Panel de aprobación", texto: "Revisá el documento adjunto de cada solicitud y aprobá o rechazá." },
+  { href: "verificacion.html", titulo: "Verificación en portería", texto: "Buscá por DNI o patente y registrá el ingreso o egreso." },
+  { href: "reporte.html", titulo: "Reporte histórico", texto: "Exportá un CSV con el historial filtrado por sede y fechas." },
+  { href: "auditoria.html", titulo: "Log de auditoría", texto: "Traza completa de todas las acciones del sistema." },
+  { href: "solicitudes.html", titulo: "Ver todas las solicitudes", texto: "Listado general con el estado actual de cada una." },
+];
+
+const pasos = rol === "admin" ? PASOS_ADMIN : PASOS_CONDUCTOR;
+document.getElementById("steps-container").innerHTML = pasos.map((p, i) => `
+  <div class="col-step">
+    <div class="card-step">
+      <div class="step-num">Paso 0${i + 1}</div>
+      <h2>${p.titulo}</h2>
+      <p>${p.texto}</p>
+      <a class="btn-step" href="${p.href}">Ir al paso <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+`).join("");
+</script>
+</body>
+</html>
