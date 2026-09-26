@@ -1,5 +1,41 @@
 # AccesoSeguro v3 — frontend estático separado del backend
 
+## Guía rápida para el equipo (correrlo en tu computadora)
+
+Necesitás tener Python 3 instalado (`python3 --version` para chequear).
+
+```
+git clone https://github.com/StefaniaSantulli/cloud-tp1.git
+cd cloud-tp1
+```
+
+**Terminal 1 — backend** (queda corriendo, no la cierres):
+```
+cd backend
+pip3 install -r requirements.txt
+python3 app.py
+```
+
+**Terminal 2 — frontend** (una Terminal nueva, también queda corriendo):
+```
+cd frontend
+python3 -m http.server 8000
+```
+
+Con las dos corriendo, abrí en el navegador:
+```
+http://localhost:8000/login.html
+```
+
+No hace falta AWS ni credenciales para probarlo así: el backend usa una base
+SQLite local automáticamente. Si adjuntás un documento en "Nueva solicitud"
+va a tirar un error en la consola del backend (no hay credenciales de AWS
+configuradas para S3), pero no rompe nada — para probar el flujo, mejor no
+adjuntar archivo mientras se prueba en local.
+
+---
+
+
 Este paquete es el primer paso de la corrección que pidió el profesor: separar
 front y back, y que el frontend sea puramente estático. No incluye todavía
 las otras correcciones (claves de S3 por empresa, presigned URLs de subida,
